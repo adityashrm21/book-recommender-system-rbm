@@ -1,3 +1,21 @@
+'''
+We don't explicitly need to specify a gpu device.
+It will be picked up on it's own if CUDA is correctly installed.
+Note that the tensorflow-gpu and cuda version should be compatible.
+I am using tf - 1.4.1 with cuda - 0.8. If you're are using cuda 0.9 or later,
+you will need a different version of tensorflow-gpu
+
+We are going to use Restricted Boltzmann Machines for this project. They have
+only two layers in the network (one hidden and one visible). The hidden layer
+has the ability to learn latent features from the input and this helps in
+categorizing the input into different classes. For example, if the input is the
+user preference (in binary - likes or didn't like) for 6 books and the hidden
+layer has 2 units, the latent features learnt could be the categories of books -
+"Crime" and "Romance". This is then used to reconstruct user input which helps
+in creating a score about the user choice. This score is finally used to
+recommend the books.
+'''
+
 # importing required libraries
 import tensorflow as tf
 import numpy as np
@@ -38,23 +56,7 @@ for readerID, curReader in readers_group:
 print("Setting the models Parameters")
 hiddenUnits = 50
 visibleUnits = len(ratings)
-'''
-We don't explicitly need to specify a gpu device.
-It will be picked up on it's own if CUDA is correctly installed.
-Note that the tensorflow-gpu and cuda version should be compatible.
-I am using tf - 1.4.1 with cuda - 0.8. If you're are using cuda 0.9 or later,
-you will need a different version of tensorflow-gpu
 
-We are going to use Restricted Boltzmann Machines for this project. They have
-only two layers in the network (one hidden and one visible). The hidden layer
-has the ability to learn latent features from the input and this helps in
-categorizing the input into different classes. For example, if the input is the
-user preference (in binary - likes or didn't like) for 6 books and the hidden
-layer has 2 units, the latent features learnt could be the categories of books -
-"Crime" and "Romance". This is then used to reconstruct user input which helps
-in creating a score about the user choice. This score is finally used to
-recommend the books.
-'''
 vb = tf.placeholder(tf.float32, [visibleUnits])  # Number of unique movies
 hb = tf.placeholder(tf.float32, [hiddenUnits])  # Number of features were going to learn
 W = tf.placeholder(tf.float32, [visibleUnits, hiddenUnits])  # Weight Matrix
@@ -90,7 +92,6 @@ err = v0 - v1
 err_sum = tf.reduce_mean(err*err)
 
 """ Initialize our Variables with Zeroes using Numpy Library """
-
 # Current weight
 cur_w = np.zeros([visibleUnits, hiddenUnits], np.float32)
 
@@ -189,7 +190,6 @@ for book in grouped_unread['book_id']:
     unread_books_names.append(books[books['book_id'] == book]['original_title'].tolist()[0])
     unread_books_authors.append(books[books['book_id'] == book]['authors'].tolist()[0])
     unread_books_scores.append(grouped_unread[grouped_unread['book_id'] == book]['Recommendation Score'].tolist()[0])
-
 
 # creating a data frame for unread books with their names, authors and recommendation scores
 unread_books_with_scores = pd.DataFrame({
