@@ -21,20 +21,27 @@ import tensorflow as tf
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 
 # Loading the books and ratings
-n = 500
+#n = 500
 # loading every 500th line as the dataset is too large
 # and tensorflow fails to create a tensor of such a large size
-ratings = pd.read_csv("data/ratings.csv", skiprows=lambda i: i % n != 0)
+#ratings = pd.read_csv("data/ratings.csv", skiprows=lambda i: i % n != 0)
+ratings = pd.read_csv('data/ratings.csv')
 to_read = pd.read_csv('data/to_read.csv')
 books = pd.read_csv('data/books.csv')
+
+temp = ratings.sort_values(by = ['user_id'], ascending = True)
+ratings = temp.iloc[:200000, :]
+
 # creating a new column with indexes to ease the process of creating our training data
+ratings = ratings.reset_index(drop = True)
 ratings['List Index'] = ratings.index
 readers_group = ratings.groupby("user_id")
 
 train = []
-#usedReaders = 2000
+#usedReaders = 500
 for readerID, curReader in readers_group:
     temp = [0] * len(ratings)
 
@@ -93,7 +100,7 @@ err_sum = tf.reduce_mean(err*err)
 
 """ Initialize our Variables with Zeroes using Numpy Library """
 # Current weight
-cur_w = np.zeros([visibleUnits, hiddenUnits], np.float32)
+cur_w = np.random.normal(loc = 0, scale = 0.01, size = [visibleUnits, hiddenUnits])
 
 # Current visible unit biases
 cur_vb = np.zeros([visibleUnits], np.float32)
@@ -110,14 +117,16 @@ prv_vb = np.zeros([visibleUnits], np.float32)
 # Previous hidden unit biases
 print("Running the session")
 prv_hb = np.zeros([hiddenUnits], np.float32)
-sess = tf.Session()
+config = tf.ConfigProto()
+config.gpu_options.allow_growth=True
+sess = tf.Session(config=config)
 sess.run(tf.global_variables_initializer())
 
 # Training RBM with 15 Epochs, with Each Epoch using 10 batches with size 100.
 # After training print out the error with epoch number.
 print("Starting the training process")
-epochs = 15
-batchsize = 100
+epochs = 25
+batchsize = 50
 errors = []
 for i in range(epochs):
     for start, end in zip(range(0, len(train), batchsize), range(batchsize, len(train), batchsize)):
@@ -131,15 +140,14 @@ for i in range(epochs):
     errors.append(sess.run(err_sum, feed_dict={v0: train, W: cur_w, vb: cur_vb, hb: cur_hb}))
     print("Error in epoch {0} is: {1}".format(i, errors[-1]))
 # can use this plot if running the code on a jupyter notebook
-'''
+
 plt.plot(errors)
 plt.ylabel('Error')
 plt.xlabel('Epoch')
-plt.show()
-'''
+plt.savefig('error.png')
 
 # This is the input that we need to provide manually, that is the user number
-user = 222
+user = 22
 inputUser = [train[user]]
 
 # Feeding in the User and Reconstructing the input
@@ -208,8 +216,8 @@ read_books_with_names = pd.DataFrame({
 sorted_result = unread_books_with_scores.sort_values(by = 'score', ascending = False)
 
 # exporting the read and unread books  with scores to csv files
-read_books_with_names.to_csv('results/read_books_with_names.csv', sep = '\t')
-sorted_result.to_csv('results/unread_books_with_scores.csv', sep = '\t')
+read_books_with_names.to_csv('results/read_books_with_names.csv')
+sorted_result.to_csv('results/unread_books_with_scores.csv')
 print('The books read by the user are:')
 print (read_books_with_names)
 print('The books recommended to the user are:')
