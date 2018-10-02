@@ -2,7 +2,7 @@
 We don't explicitly need to specify a gpu device.
 It will be picked up on it's own if CUDA is correctly installed.
 Note that the tensorflow-gpu and cuda version should be compatible.
-I am using tf - 1.4.1 with cuda - 0.8. If you're are using cuda 0.9 or later,
+I am using tf - 1.4.1 with cuda - 8.0. If you're are using cuda 0.9 or later,
 you will need a different version of tensorflow-gpu
 
 We are going to use Restricted Boltzmann Machines for this project. They have
