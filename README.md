@@ -10,7 +10,7 @@ RBMs are a special class of [Boltzmann Machines](https://en.wikipedia.org/wiki/B
 
 A Boltzmann Machine             |  A Restricted Boltzmann Machine
 :-------------------------:|:-------------------------:
-![boltzmann](https://upload.wikimedia.org/wikipedia/commons/7/7a/Boltzmannexamplev1.png =300x)  |  ![rbm](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Restricted_Boltzmann_machine.svg/440px-Restricted_Boltzmann_machine.svg.png =300x)
+<img src = "https://upload.wikimedia.org/wikipedia/commons/7/7a/Boltzmannexamplev1.png" width = "300">  |  <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Restricted_Boltzmann_machine.svg/440px-Restricted_Boltzmann_machine.svg.png" width = "300">
 
 
 Each undirected edge in a Boltzmann Machine represents a dependency. In this example there are 3 hidden units and 4 visible units. In an RBM, we have a symmetric bipartite graph where no two units within a same group are connected.
