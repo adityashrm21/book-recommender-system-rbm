@@ -27,6 +27,7 @@ RBMs are unsupervised learning algorithms which try to **reconstruct** user inpu
 The Network was trained for 25 epochs with a mini-batch size of 50. The code is using tensorflow-gpu version 1.4.1 which is compatible with CUDA 8.0 (you need to use compatible versions of tensorflow-gpu and CUDA). You can check the version of TensorFlow compatible with the CUDA version installed in your machine [here](https://www.tensorflow.org/install/source#tested_source_configurations). You can also use the CPU-only version of TensorFlow if don't have access to a GPU or if you are okay with the code running for a little more time.
 
 #### Sources:
+* [Wikipedia - Restricted Boltzmann Machines](https://en.wikipedia.org/wiki/Restricted_Boltzmann_machine)
 *  https://github.com/srp98/Movie-Recommender-using-RBM
 * [Guide on training RBM by Geoffrey Hinton](https://www.csrc.ac.cn/upload/file/20170703/1499052743888438.pdf)
 * https://skymind.ai/wiki/restricted-boltzmann-machine

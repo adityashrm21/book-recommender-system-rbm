@@ -32,11 +32,11 @@ ratings = pd.read_csv('data/ratings.csv')
 to_read = pd.read_csv('data/to_read.csv')
 books = pd.read_csv('data/books.csv')
 
-temp = ratings.sort_values(by = ['user_id'], ascending = True)
+temp = ratings.sort_values(by=['user_id'], ascending=True)
 ratings = temp.iloc[:200000, :]
 
 # creating a new column with indexes to ease the process of creating our training data
-ratings = ratings.reset_index(drop = True)
+ratings = ratings.reset_index(drop=True)
 ratings['List Index'] = ratings.index
 readers_group = ratings.groupby("user_id")
 
@@ -46,7 +46,7 @@ for readerID, curReader in readers_group:
     temp = [0] * len(ratings)
 
     for num, book in curReader.iterrows():
-        temp[book['List Index']] = book['rating']/5.0
+        temp[book['List Index']] = book['rating'] / 5.0
 
     train.append(temp)
     # this code chunk can be used if we want to stop after
@@ -58,23 +58,26 @@ for readerID, curReader in readers_group:
     print("readers remaining: ", usedReaders)
     '''
 # Not a good idea to print train as it cannot be held into memory all at once.
-#print(train)
+# print(train)
 
 print("Setting the models Parameters")
 hiddenUnits = 50
 visibleUnits = len(ratings)
 
 vb = tf.placeholder(tf.float32, [visibleUnits])  # Number of unique movies
-hb = tf.placeholder(tf.float32, [hiddenUnits])  # Number of features were going to learn
+# Number of features were going to learn
+hb = tf.placeholder(tf.float32, [hiddenUnits])
 W = tf.placeholder(tf.float32, [visibleUnits, hiddenUnits])  # Weight Matrix
 
 print("Phase 1: Input Processing")
 v0 = tf.placeholder("float", [None, visibleUnits])
 _h0 = tf.nn.sigmoid(tf.matmul(v0, W) + hb)  # Visible layer activation
-h0 = tf.nn.relu(tf.sign(_h0 - tf.random_uniform(tf.shape(_h0))))  # Gibb's Sampling
+# Gibb's Sampling
+h0 = tf.nn.relu(tf.sign(_h0 - tf.random_uniform(tf.shape(_h0))))
 
 print("Phase 2: Reconstruction")
-_v1 = tf.nn.sigmoid(tf.matmul(h0, tf.transpose(W)) + vb)  # Hidden layer activation
+_v1 = tf.nn.sigmoid(tf.matmul(h0, tf.transpose(W)) +
+                    vb)  # Hidden layer activation
 v1 = tf.nn.relu(tf.sign(_v1 - tf.random_uniform(tf.shape(_v1))))
 h1 = tf.nn.sigmoid(tf.matmul(v1, W) + hb)
 
@@ -96,11 +99,11 @@ update_hb = hb + alpha * tf.reduce_mean(h0 - h1, 0)
 
 # Set the error function, here we use Mean Absolute Error Function
 err = v0 - v1
-err_sum = tf.reduce_mean(err*err)
+err_sum = tf.reduce_mean(err * err)
 
 """ Initialize our Variables with Zeroes using Numpy Library """
 # Current weight
-cur_w = np.random.normal(loc = 0, scale = 0.01, size = [visibleUnits, hiddenUnits])
+cur_w = np.random.normal(loc=0, scale=0.01, size=[visibleUnits, hiddenUnits])
 
 # Current visible unit biases
 cur_vb = np.zeros([visibleUnits], np.float32)
@@ -118,7 +121,7 @@ prv_vb = np.zeros([visibleUnits], np.float32)
 print("Running the session")
 prv_hb = np.zeros([hiddenUnits], np.float32)
 config = tf.ConfigProto()
-config.gpu_options.allow_growth=True
+config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
 sess.run(tf.global_variables_initializer())
 
@@ -131,13 +134,17 @@ errors = []
 for i in range(epochs):
     for start, end in zip(range(0, len(train), batchsize), range(batchsize, len(train), batchsize)):
         batch = train[start:end]
-        cur_w = sess.run(update_w, feed_dict={v0: batch, W: prv_w, vb: prv_vb, hb: prv_hb})
-        cur_vb = sess.run(update_vb, feed_dict={v0: batch, W: prv_w, vb: prv_vb, hb: prv_hb})
-        cur_hb = sess.run(update_hb, feed_dict={v0: batch, W: prv_w, vb: prv_vb, hb: prv_hb})
+        cur_w = sess.run(update_w, feed_dict={
+                         v0: batch, W: prv_w, vb: prv_vb, hb: prv_hb})
+        cur_vb = sess.run(update_vb, feed_dict={
+                          v0: batch, W: prv_w, vb: prv_vb, hb: prv_hb})
+        cur_hb = sess.run(update_hb, feed_dict={
+                          v0: batch, W: prv_w, vb: prv_vb, hb: prv_hb})
         prv_w = cur_w
         prv_vb = cur_vb
         prv_hb = cur_hb
-    errors.append(sess.run(err_sum, feed_dict={v0: train, W: cur_w, vb: cur_vb, hb: cur_hb}))
+    errors.append(sess.run(err_sum, feed_dict={
+                  v0: train, W: cur_w, vb: cur_vb, hb: cur_hb}))
     print("Error in epoch {0} is: {1}".format(i, errors[-1]))
 # can use this plot if running the code on a jupyter notebook
 
@@ -174,8 +181,10 @@ read_books_id = read_books.tolist()
 read_books_names = []
 read_books_authors = []
 for book in read_books_id:
-    read_books_names.append(books[books['book_id'] == book]['original_title'].tolist()[0])
-    read_books_authors.append(books[books['book_id'] == book]['authors'].tolist()[0])
+    read_books_names.append(
+        books[books['book_id'] == book]['original_title'].tolist()[0])
+    read_books_authors.append(
+        books[books['book_id'] == book]['authors'].tolist()[0])
 
 # Find all books the mock user has 'not' read before using the to_read data
 unread_books = to_read[to_read['user_id'] == cur_user_id]['book_id']
@@ -187,7 +196,8 @@ unread_with_score = ratings[ratings['book_id'].isin(unread_books_id)]
 unread_with_score
 
 # grouping the unread data on book id and taking the mean of the recommendation scores for each book_id
-grouped_unread = unread_with_score.groupby('book_id', as_index = False)['Recommendation Score'].mean()
+grouped_unread = unread_with_score.groupby('book_id', as_index=False)[
+    'Recommendation Score'].mean()
 grouped_unread
 
 # getting the names and authors of the unread books
@@ -195,30 +205,34 @@ unread_books_names = []
 unread_books_authors = []
 unread_books_scores = []
 for book in grouped_unread['book_id']:
-    unread_books_names.append(books[books['book_id'] == book]['original_title'].tolist()[0])
-    unread_books_authors.append(books[books['book_id'] == book]['authors'].tolist()[0])
-    unread_books_scores.append(grouped_unread[grouped_unread['book_id'] == book]['Recommendation Score'].tolist()[0])
+    unread_books_names.append(
+        books[books['book_id'] == book]['original_title'].tolist()[0])
+    unread_books_authors.append(
+        books[books['book_id'] == book]['authors'].tolist()[0])
+    unread_books_scores.append(
+        grouped_unread[grouped_unread['book_id'] == book]['Recommendation Score'].tolist()[0])
 
 # creating a data frame for unread books with their names, authors and recommendation scores
 unread_books_with_scores = pd.DataFrame({
-    'book_name' : unread_books_names,
-    'book_authors' : unread_books_authors,
-    'score' : unread_books_scores
+    'book_name': unread_books_names,
+    'book_authors': unread_books_authors,
+    'score': unread_books_scores
 })
 
 # creating a data frame for read books with the names and authors
 read_books_with_names = pd.DataFrame({
-    'book_name' : read_books_names,
-    'book_authors' : read_books_authors
+    'book_name': read_books_names,
+    'book_authors': read_books_authors
 })
 
 # sort the result in descending order of the recommendation score
-sorted_result = unread_books_with_scores.sort_values(by = 'score', ascending = False)
+sorted_result = unread_books_with_scores.sort_values(
+    by='score', ascending=False)
 
 # exporting the read and unread books  with scores to csv files
 read_books_with_names.to_csv('results/read_books_with_names.csv')
 sorted_result.to_csv('results/unread_books_with_scores.csv')
 print('The books read by the user are:')
-print (read_books_with_names)
+print(read_books_with_names)
 print('The books recommended to the user are:')
 print(sorted_result)
