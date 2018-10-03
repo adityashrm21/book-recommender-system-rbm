@@ -18,10 +18,17 @@ Multiple RBMs can also be `stacked` and can be fine-tuned through the process of
 
 RBM is a Stochastic Neural Network which means that each neuron will have some random behavior when activated. There are two other layers of bias units (hidden bias and visible bias) in an RBM. This is what makes RBMs different from autoencoders. The hidden bias RBM produce the activation on the forward pass and the visible bias helps RBM to reconstruct the input during a backward pass.
 
-## Why use RBM for recommending books?
+## Why use RBM for recommendation?
 
 RBMs are unsupervised learning algorithms which try to **reconstruct** user input and in order to achieve this, they try to learn patterns from the examples in our data. This is then used to create a lower-dimensional representation of the pattern which can later be used to reconstruct approximations of the original input. Their ability to do this makes them a good fit for our problem because we need the algorithm to identify a pattern (the reading taste of a user) from the input and reconstruct it in the form of a score for each book (a rating essentially). This ultimately would help us in providing recommendations to that user based on the reconstructed scores.
 
 ## Architecture
 
 The Network was trained for 25 epochs with a mini-batch size of 50. The code is using tensorflow-gpu version 1.4.1 which is compatible with CUDA 8.0 (you need to use compatible versions of tensorflow-gpu and CUDA). You can check the version of TensorFlow compatible with the CUDA version installed in your machine [here](https://www.tensorflow.org/install/source#tested_source_configurations). You can also use the CPU-only version of TensorFlow if don't have access to a GPU or if you are okay with the code running for a little more time.
+
+#### Sources:
+*  https://github.com/srp98/Movie-Recommender-using-RBM
+* [Guide on training RBM by Geoffrey Hinton](https://www.csrc.ac.cn/upload/file/20170703/1499052743888438.pdf)
+* https://skymind.ai/wiki/restricted-boltzmann-machine
+* https://www.cs.toronto.edu/~rsalakhu/papers/rbmcf.pdf
+* [Artem Oppermann's Medium post on understanding and training RBMs]( https://towardsdatascience.com/deep-learning-meets-physics-restricted-boltzmann-machines-part-ii-4b159dce1ffb)
