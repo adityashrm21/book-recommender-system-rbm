@@ -24,11 +24,23 @@ RBM is a Stochastic Neural Network which means that each neuron will have some r
 
 RBMs are unsupervised learning algorithms which try to **reconstruct** user input and in order to achieve this, they try to learn patterns from the examples in our data. This is then used to create a lower-dimensional representation of the pattern which can later be used to reconstruct approximations of the original input. Their ability to do this makes them a good fit for our problem because we need the algorithm to identify a pattern (the reading taste of a user) from the input and reconstruct it in the form of a score for each book (a rating essentially). This ultimately would help us in providing recommendations to that user based on the reconstructed scores.
 
+## Requirements:
+
+- Python 3.6 and above
+- Tensorflow 1.4.1 (can be newer if a different CUDA version is Unsupervised)
+- CUDA 8.0 (Optional - if you have access to a GPU)
+- NumPy
+- Pandas
+- Matplotlib
+
+## Dataset
+
+The dataset was obtained from the **goodbooks-10k** dataset from [this github repository](https://github.com/zygmuntz/goodbooks-10k). This data is also available at other places like Kaggle.
 ## Architecture
 
 The Network was trained for 25 epochs with a mini-batch size of 50. The code is using tensorflow-gpu version 1.4.1 which is compatible with CUDA 8.0 (you need to use compatible versions of tensorflow-gpu and CUDA). You can check the version of TensorFlow compatible with the CUDA version installed in your machine [here](https://www.tensorflow.org/install/source#tested_source_configurations). You can also use the CPU-only version of TensorFlow if don't have access to a GPU or if you are okay with the code running for a little more time.
 
-#### Sources:
+#### Sources/References:
 * [Wikipedia - Restricted Boltzmann Machines](https://en.wikipedia.org/wiki/Restricted_Boltzmann_machine)
 *  https://github.com/srp98/Movie-Recommender-using-RBM
 * [Guide on training RBM by Geoffrey Hinton](https://www.csrc.ac.cn/upload/file/20170703/1499052743888438.pdf)
