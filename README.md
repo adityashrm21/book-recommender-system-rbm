@@ -1,5 +1,15 @@
 # Book-Recommender-System-RBM
-A book recommender system created using simple Restricted Boltzmann Machines
+A book recommender system created using Restricted Boltzmann Machines in Python
+
+<img src = "https://cdn-images-1.medium.com/max/1600/1*cLusB9Kkfaf-EudwtX8ASQ.png">
+
+[Image Source](https://cdn-images-1.medium.com/max/1600/1*cLusB9Kkfaf-EudwtX8ASQ.png)
+
+<img src = "https://i.gifer.com/Td5I.gif">
+
+[GIF Source](https://i.gifer.com/Td5I.gif)
+
+If you are feeling like that, read on to understand what are RBMs and why are we using them for this task!
 
 ## What are Restricted Boltzmann Machines?
 
@@ -21,6 +31,10 @@ Multiple RBMs can also be `stacked` and can be fine-tuned through the process of
 RBM is a Stochastic Neural Network which means that each neuron will have some random behavior when activated. There are two other layers of bias units (hidden bias and visible bias) in an RBM. This is what makes RBMs different from autoencoders. The hidden bias RBM produce the activation on the forward pass and the visible bias helps RBM to reconstruct the input during a backward pass.
 
 ## Why use RBM for recommendation?
+
+<img src = "https://image.slidesharecdn.com/mlss2014xamatriain-140721124307-phpapp02/95/recommender-systems-machine-learning-summer-school-2014-cmu-72-638.jpg?cb=1405946863">
+
+[Image Source](https://image.slidesharecdn.com/mlss2014xamatriain-140721124307-phpapp02/95/recommender-systems-machine-learning-summer-school-2014-cmu-72-638.jpg?cb=1405946863)
 
 RBMs are unsupervised learning algorithms which try to **reconstruct** user input and in order to achieve this, they try to learn patterns from the examples in our data. This is then used to create a lower-dimensional representation of the pattern which can later be used to reconstruct approximations of the original input. Their ability to do this makes them a good fit for our problem because we need the algorithm to identify a pattern (the reading taste of a user) from the input and reconstruct it in the form of a score for each book (a rating essentially). This ultimately would help us in providing recommendations to that user based on the reconstructed scores.
 
