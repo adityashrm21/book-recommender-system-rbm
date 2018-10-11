@@ -27,7 +27,7 @@ RBMs are unsupervised learning algorithms which try to **reconstruct** user inpu
 ## Requirements:
 
 - Python 3.6 and above
-- Tensorflow 1.4.1 (can be newer if a different CUDA version is Unsupervised)
+- Tensorflow 1.4.1 (can be newer if a different CUDA version is installed)
 - CUDA 8.0 (Optional - if you have access to a GPU)
 - NumPy
 - Pandas
