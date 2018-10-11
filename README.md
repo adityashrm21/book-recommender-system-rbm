@@ -14,11 +14,17 @@ A book recommender system created using Restricted Boltzmann Machines in Python
 
 [Image Source](https://cdn-images-1.medium.com/max/1600/1*cLusB9Kkfaf-EudwtX8ASQ.png)
 
-<img src = "https://i.gifer.com/Td5I.gif">
+## How to use this repository?
 
-[GIF Source](https://i.gifer.com/Td5I.gif)
+The repository contains a single script that can be run to produce the results. You will need to have the required dataset to run the code locally. You can either:
+1. Clone the repository and use the script and the dataset files in the [data folder](https://github.com/adityashrm21/Book-Recommender-System-RBM/tree/master/data).
+2. Fork the repository and clone it to add on to this repository. Just create a Pull Request to add your code.
+3. Simply download the code file and get the whole dataset including a couple more files from the [goodbooks-10  dataset repository](https://github.com/zygmuntz/goodbooks-10k).
 
-If you are feeling like that, read on to understand what are RBMs and why are we using them for this task!
+
+<img src = "https://media.giphy.com/media/3o7abuqxszgO6pFb3i/giphy.gif">
+
+[GIF Source](https://media.giphy.com/media/3o7abuqxszgO6pFb3i/giphy.gif)
 
 ## What are Restricted Boltzmann Machines?
 
@@ -53,6 +59,13 @@ The dataset was obtained from the **goodbooks-10k** dataset from [this github re
 ## Architecture
 
 We are implementing and using RBMs to train our network for the task. The network was trained for 25 epochs with a mini-batch size of 50. The code is using tensorflow-gpu version 1.4.1 which is compatible with CUDA 8.0 (you need to use compatible versions of tensorflow-gpu and CUDA). You can check the version of TensorFlow compatible with the CUDA version installed on your machine [here](https://www.tensorflow.org/install/source#tested_source_configurations). You can also use the CPU-only version of TensorFlow if don't have access to a GPU or if you are okay with the code running for a little more time.
+
+## Contribute
+
+#### To-do tasks:
+- Create a web application for people to use the system online where they can just select the books they have read to get recommendations.
+
+**Feel free to help me out in adding this functionality and any other useful feature for the application.**
 
 #### Sources/References:
 * [Wikipedia - Restricted Boltzmann Machines](https://en.wikipedia.org/wiki/Restricted_Boltzmann_machine)
