@@ -1,7 +1,7 @@
 # Book-Recommender-System-RBM
 A book recommender system created using Restricted Boltzmann Machines in Python
 
-<img src = "https://img.shields.io/badge/requirements-2%20old-blue.svg">
+<img src = "https://img.shields.io/badge/requirements-compatible-blue.svg">
 
 - Python 3.6 and above
 - Tensorflow 1.4.1 (older - compatible to CUDA 8.0)
