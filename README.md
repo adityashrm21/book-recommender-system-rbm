@@ -1,6 +1,15 @@
 # Book-Recommender-System-RBM
 A book recommender system created using Restricted Boltzmann Machines in Python
 
+<img src = "https://img.shields.io/badge/requirements-2%20old-blue.svg">
+
+- Python 3.6 and above
+- Tensorflow 1.4.1 (older - compatible to CUDA 8.0)
+- CUDA 8.0 (Optional - if you have access to a GPU)
+- NumPy
+- Pandas
+- Matplotlib
+
 <img src = "https://cdn-images-1.medium.com/max/1600/1*cLusB9Kkfaf-EudwtX8ASQ.png">
 
 [Image Source](https://cdn-images-1.medium.com/max/1600/1*cLusB9Kkfaf-EudwtX8ASQ.png)
@@ -37,15 +46,6 @@ RBM is a Stochastic Neural Network which means that each neuron will have some r
 ## Why use RBM for recommendation?
 
 RBMs are unsupervised learning algorithms which try to **reconstruct** user input and in order to achieve this, they try to learn patterns from the examples in our data. This is then used to create a lower-dimensional representation of the pattern which can later be used to reconstruct approximations of the original input. Their ability to do this makes them a good fit for our problem because we need the algorithm to identify a pattern (the reading taste of a user) from the input and reconstruct it in the form of a score for each book (a rating essentially). This ultimately would help us in providing recommendations to that user based on the reconstructed scores.
-
-## Requirements:
-
-- Python 3.6 and above
-- Tensorflow 1.4.1 (can be newer if a different CUDA version is installed)
-- CUDA 8.0 (Optional - if you have access to a GPU)
-- NumPy
-- Pandas
-- Matplotlib
 
 ## Dataset
 
