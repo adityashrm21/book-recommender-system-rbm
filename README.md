@@ -17,9 +17,9 @@ A book recommender system created using Restricted Boltzmann Machines in Python
 ## How to use this repository?
 
 The repository contains a single script that can be run to produce the results. You will need to have the required dataset to run the code locally. You can either:
-1. Clone the repository and use the script and the dataset files in the [data folder](https://github.com/adityashrm21/Book-Recommender-System-RBM/tree/master/data).
-2. Fork the repository and clone it to add on to this repository. Just create a Pull Request to add your code.
-3. Simply download the code file and get the whole dataset including a couple more files from the [goodbooks-10  dataset repository](https://github.com/zygmuntz/goodbooks-10k).
+- Clone the repository and use the script and the files in the [data folder](https://github.com/adityashrm21/Book-Recommender-System-RBM/tree/master/data).
+- If you want to contribute, fork the repository and clone it and create pull requests with the additions/changes.
+- Simply download the code file and get the whole dataset including a couple more files from the [goodbooks-10  dataset repository](https://github.com/zygmuntz/goodbooks-10k) if you want to play around a bot more.
 
 
 <img src = "https://media.giphy.com/media/3o7abuqxszgO6pFb3i/giphy.gif">
