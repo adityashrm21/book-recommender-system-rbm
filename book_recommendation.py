@@ -126,7 +126,7 @@ config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
 sess.run(tf.global_variables_initializer())
 
-# Training RBM with 15 Epochs, with Each Epoch using 10 batches with size 100.
+# Training RBM with 25 Epochs, with Each Epoch using batch size of 50.
 # After training print out the error with epoch number.
 print("Starting the training process")
 epochs = 25
