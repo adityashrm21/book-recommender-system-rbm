@@ -192,7 +192,7 @@ unread_books = to_read[to_read['user_id'] == cur_user_id]['book_id']
 unread_books_id = unread_books.tolist()
 unread_books_id
 
-# extract the ratings of all the unead books from ratings dataframe
+# extract the ratings of all the unread books from ratings dataframe
 unread_with_score = ratings[ratings['book_id'].isin(unread_books_id)]
 unread_with_score
 
