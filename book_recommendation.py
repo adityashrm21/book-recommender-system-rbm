@@ -118,8 +118,9 @@ prv_w = np.zeros([visibleUnits, hiddenUnits], np.float32)
 prv_vb = np.zeros([visibleUnits], np.float32)
 
 # Previous hidden unit biases
-print("Running the session")
 prv_hb = np.zeros([hiddenUnits], np.float32)
+
+print("Running the session")
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
