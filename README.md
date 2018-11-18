@@ -1,5 +1,5 @@
 # Book-Recommender-System-RBM
-A book recommender system created using Restricted Boltzmann Machines in Python
+A book recommender system created using Restricted Boltzmann Machines in Python. For a detailed tutorial on how to build this system, read my blog post on [Building a Recommender System using Restricted Boltzmann Machines](https://adityashrm21.github.io/Book-Recommender-System-RBM/).
 
 <img src = "https://img.shields.io/badge/requirements-compatible-blue.svg">
 
