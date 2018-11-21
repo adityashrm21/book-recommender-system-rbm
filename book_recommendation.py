@@ -21,6 +21,7 @@ import tensorflow as tf
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import random
 plt.switch_backend('agg')
 
 # Loading the books and ratings
@@ -40,15 +41,17 @@ ratings = ratings.reset_index(drop=True)
 ratings['List Index'] = ratings.index
 readers_group = ratings.groupby("user_id")
 
-train = []
+total = []
+#train = np.zeros((readers_group.shape[0], len(ratings)))
 #usedReaders = 500
 for readerID, curReader in readers_group:
-    temp = [0] * len(ratings)
+    #temp = [0] * len(ratings)
+    temp = np.zeros(len(ratings))
 
     for num, book in curReader.iterrows():
         temp[book['List Index']] = book['rating'] / 5.0
 
-    train.append(temp)
+    total.append(temp)
     # this code chunk can be used if we want to stop after
     # a specific number of readers from our data
     '''
@@ -60,8 +63,13 @@ for readerID, curReader in readers_group:
 # Not a good idea to print train as it cannot be held into memory all at once.
 # print(train)
 
+random.shuffle(total)
+print("total size of the data is: {0}".format(len(total)))
+train = total[:1500]
+valid = total[1500:]
+
 print("Setting the models Parameters")
-hiddenUnits = 50
+hiddenUnits = 64
 visibleUnits = len(ratings)
 
 vb = tf.placeholder(tf.float32, [visibleUnits])  # Number of unique movies
@@ -126,12 +134,20 @@ config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
 sess.run(tf.global_variables_initializer())
 
+def free_energy(v_sample, W, vb, hb):
+    ''' Function to compute the free energy '''
+    wx_b = np.dot(v_sample, W) + hb
+    vbias_term = np.dot(v_sample, vb)
+    hidden_term = np.sum(np.log(1 + np.exp(wx_b)), axis = 1)
+    return -hidden_term - vbias_term
 # Training RBM with 25 Epochs, with Each Epoch using batch size of 50.
 # After training print out the error with epoch number.
 print("Starting the training process")
 epochs = 25
 batchsize = 50
 errors = []
+energy_train = []
+energy_valid = []
 for i in range(epochs):
     for start, end in zip(range(0, len(train), batchsize), range(batchsize, len(train), batchsize)):
         batch = train[start:end]
@@ -144,15 +160,22 @@ for i in range(epochs):
         prv_w = cur_w
         prv_vb = cur_vb
         prv_hb = cur_hb
+
+    energy_train.append(free_energy(train, cur_w, cur_vb, cur_hb))
+    energy_valid.append(free_energy(valid, cur_w, cur_vb, cur_hb))
+
     errors.append(sess.run(err_sum, feed_dict={
                   v0: train, W: cur_w, vb: cur_vb, hb: cur_hb}))
     print("Error in epoch {0} is: {1}".format(i, errors[-1]))
 # can use this plot if running the code on a jupyter notebook
 
-plt.plot(errors)
-plt.ylabel('Error')
+plt.plot(energy_train)
+plt.plot(energy_valid)
+plt.ylabel('Free Energy')
 plt.xlabel('Epoch')
-plt.savefig('error.png')
+plt.savefig('energy.png')
+
+
 
 # This is the input that we need to provide manually, that is the user number
 user = 22
