@@ -62,9 +62,9 @@ We are implementing and using RBMs to train our network for the task. The networ
 
 ### Training Error Graph
 
-This graph was obtained on training the data for 200 epochs with a mini-batch size of 100:
+This graph was obtained on training the data for 60 epochs with a mini-batch size of 100:
 
-![error](imgs/error200.png)
+![error](imgs/error60.png)
 
 ## Deciding number of Epochs
 
