@@ -62,9 +62,17 @@ We are implementing and using RBMs to train our network for the task. The networ
 
 ### Training Error Graph
 
-This graph was obtained on training the data for 25 epochs with a mini-batch size of 50:
+This graph was obtained on training the data for 200 epochs with a mini-batch size of 100:
 
-![error](imgs/error.png)
+![error](imgs/error200.png)
+
+## Deciding number of Epochs
+
+<center><img src ="imgs/free_energy.png"></center>
+
+The plot shows the average free energy for training and the test dataset with epochs.
+
+If the model is not overfitting at all, the average free energy should be about the same on training and validation data. As the model starts to overfit the average free energy of the validation data will rise relative to the average free energy of the training data and this gap represents the amount of overfitting. So we can determine the number of epochs to run the training for using this approach. Looking at the plot, we can safely decide the number of epochs to be around **50**.
 
 ## Contribute
 
