@@ -63,10 +63,14 @@ for readerID, curReader in readers_group:
 # Not a good idea to print train as it cannot be held into memory all at once.
 # print(train)
 
+# Dividing the total data into train and validation sets
 random.shuffle(total)
 print("total size of the data is: {0}".format(len(total)))
+
 train = total[:1500]
 valid = total[1500:]
+print("size of the training data is: {0}".format(len(train)))
+print("size of the validation data is: {0}".format(len(valid)))
 
 print("Setting the models Parameters")
 hiddenUnits = 64
@@ -140,11 +144,13 @@ def free_energy(v_sample, W, vb, hb):
     vbias_term = np.dot(v_sample, vb)
     hidden_term = np.sum(np.log(1 + np.exp(wx_b)), axis = 1)
     return -hidden_term - vbias_term
-# Training RBM with 25 Epochs, with Each Epoch using batch size of 50.
+
+
+# Training RBM with 60 Epochs, with Each Epoch using batch size of 100.
 # After training print out the error with epoch number.
 print("Starting the training process")
-epochs = 25
-batchsize = 50
+epochs = 60
+batchsize = 100
 errors = []
 energy_train = []
 energy_valid = []
@@ -161,20 +167,14 @@ for i in range(epochs):
         prv_vb = cur_vb
         prv_hb = cur_hb
 
-    energy_train.append(free_energy(train, cur_w, cur_vb, cur_hb))
-    energy_valid.append(free_energy(valid, cur_w, cur_vb, cur_hb))
+    energy_train.append(np.mean(free_energy(train, cur_w, cur_vb, cur_hb)))
+    #print("Epoch: {0}, free energy: {1}".format(i, energy_train[i]))
+    energy_valid.append(np.mean(free_energy(valid, cur_w, cur_vb, cur_hb)))
 
     errors.append(sess.run(err_sum, feed_dict={
                   v0: train, W: cur_w, vb: cur_vb, hb: cur_hb}))
-    print("Error in epoch {0} is: {1}".format(i, errors[-1]))
-# can use this plot if running the code on a jupyter notebook
-
-plt.plot(energy_train)
-plt.plot(energy_valid)
-plt.ylabel('Free Energy')
-plt.xlabel('Epoch')
-plt.savefig('energy.png')
-
+    if i % 10 == 0:
+        print("Error in epoch {0} is: {1}".format(i, errors[i]))
 
 
 # This is the input that we need to provide manually, that is the user number
