@@ -4,8 +4,8 @@ A book recommender system created using Restricted Boltzmann Machines in Python.
 <img src = "https://img.shields.io/badge/requirements-compatible-blue.svg">
 
 - Python 3.6 and above
-- Tensorflow 1.4.1 (older - compatible to CUDA 8.0)
-- CUDA 8.0 (Optional - if you have access to a GPU)
+- CUDA 8.0
+- Tensorflow-gpu 1.4.1 (older - compatible with CUDA 8.0)
 - NumPy
 - Pandas
 - Matplotlib
