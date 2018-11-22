@@ -260,3 +260,17 @@ print('The books read by the user are:')
 print(read_books_with_names)
 print('The books recommended to the user are:')
 print(sorted_result)
+
+# Saving the plots
+plt.plot(errors)
+plt.xlabel("Epoch")
+plt.ylabel("Error")
+plt.savefig("error.png")
+
+fig, ax = plt.subplots()
+ax.plot(energy_train, label='train')
+ax.plot(energy_valid, label='valid')
+leg = ax.legend()
+plt.xlabel("Epoch")
+plt.ylabel("Free Energy")
+plt.savefig("free_energy.png")
