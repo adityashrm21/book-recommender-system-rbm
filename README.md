@@ -19,7 +19,7 @@ A book recommender system created using Restricted Boltzmann Machines in Python.
 The repository contains a single script that can be run to produce the results. You will need to have the required dataset to run the code locally. You can either:
 - Clone the repository and use the script and the files in the [data folder](https://github.com/adityashrm21/Book-Recommender-System-RBM/tree/master/data).
 - If you want to contribute, fork the repository and clone it and create pull requests with the additions/changes.
-- Simply download the code file and get the whole dataset including a couple more files from the [goodbooks-10  dataset repository](https://github.com/zygmuntz/goodbooks-10k) if you want to play around a bot more.
+- Simply download the code file and get the whole dataset including a couple more files from the [goodbooks-10  dataset repository](https://github.com/zygmuntz/goodbooks-10k) if you want to play around a bit more.
 
 
 <img src = "https://media.giphy.com/media/3o7abuqxszgO6pFb3i/giphy.gif">
@@ -77,9 +77,10 @@ If the model is not overfitting at all, the average free energy should be about 
 ## Contribute
 
 #### To-do tasks:
-- Create a web application for people to use the system online where they can just select the books they have read to get recommendations.
+- Create a web application (maybe integrate into TensorFlow.js) for people to use the it online where they can just select the books they have read to get recommendations.
+- Clean up the code and make it more object oriented.
 
-**Feel free to help me out in adding this functionality and any other useful feature for the application.**
+**Feel free to add any ideas by opening issues or contributing in any way you like!**
 
 #### Sources/References:
 * [Wikipedia - Restricted Boltzmann Machines](https://en.wikipedia.org/wiki/Restricted_Boltzmann_machine)
