@@ -76,7 +76,7 @@ print("Setting the models Parameters")
 hiddenUnits = 64
 visibleUnits = len(ratings)
 
-vb = tf.placeholder(tf.float32, [visibleUnits])  # Number of unique movies
+vb = tf.placeholder(tf.float32, [visibleUnits])  # Number of unique books
 # Number of features were going to learn
 hb = tf.placeholder(tf.float32, [hiddenUnits])
 W = tf.placeholder(tf.float32, [visibleUnits, hiddenUnits])  # Weight Matrix
