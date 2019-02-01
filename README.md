@@ -21,11 +21,6 @@ The repository contains a single script that can be run to produce the results. 
 - If you want to contribute, fork the repository and clone it and create pull requests with the additions/changes.
 - Simply download the code file and get the whole dataset including a couple more files from the [goodbooks-10  dataset repository](https://github.com/zygmuntz/goodbooks-10k) if you want to play around a bit more.
 
-
-<img src = "https://media.giphy.com/media/3o7abuqxszgO6pFb3i/giphy.gif">
-
-[GIF Source](https://media.giphy.com/media/3o7abuqxszgO6pFb3i/giphy.gif)
-
 ## What are Restricted Boltzmann Machines?
 
 **Note**: A detailed explanation on RBMs can be found on my [blog post](https://adityashrm21.github.io/Restricted-Boltzmann-Machines/).
