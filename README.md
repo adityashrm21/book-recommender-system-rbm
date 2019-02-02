@@ -32,6 +32,7 @@ python3 main.py --data_dir='data' --num_hid=64 --epochs=30 --batch_size=128
 # if you want the free energy plot as well
 python3 main.py --data_dir='data' --num_hid=64 --epochs=30 --batch_size=128 --free_energy=True
 ```
+**Note**: Training will be very fast with a GPU but you can still run it without a GPU. Make sure to not select a large number of rows (default = 200000) as you may get Out of Memory error for a large tensor allocation.
 
 ### Command help
 ```bash
