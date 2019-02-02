@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 from utils import Util
+import matplotlib
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
 
 class RBM(object):
@@ -98,9 +100,9 @@ class RBM(object):
             self.errors.append(sess.run(err_sum, feed_dict={
                           v0: train, W: cur_w, vb: cur_vb, hb: cur_hb}))
             if verbose:
-                print("Error in epoch {0} is: {1}".format(i, self.errors[i]))
-            elif i % 10 == 0:
-                print("Error in epoch {0} is: {1}".format(i, self.errors[i]))
+                print("Error after {0} epochs is: {1}".format(i+1, self.errors[i]))
+            elif i % 10 == 9:
+                print("Error after {0} epochs is: {1}".format(i+1, self.errors[i]))
 
         if free_energy:
             print("Exporting free energy plot")
@@ -201,7 +203,7 @@ class RBM(object):
         plt.plot(self.errors)
         plt.xlabel("Epoch")
         plt.ylabel("Error")
-        plt.savefig("plots/error.png")
+        plt.savefig("error.png")
 
     def export_free_energy_plot(self):
         fig, ax = plt.subplots()
@@ -210,4 +212,4 @@ class RBM(object):
         leg = ax.legend()
         plt.xlabel("Epoch")
         plt.ylabel("Free Energy")
-        plt.savefig("plots/free_energy.png")
+        plt.savefig("free_energy.png")
