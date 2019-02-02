@@ -194,7 +194,7 @@ class RBM(object):
 
         # exporting the read and unread books  with scores to csv files
         read.to_csv('results/read_books_with_names.csv')
-        sorted_result.to_csv('results/unread_books_with_scores.csv')
+        sorted_result.to_csv('results/recommendations_with_scores.csv')
         print('The books read by the user are:')
         print(read)
         print('The books recommended to the user are:')
