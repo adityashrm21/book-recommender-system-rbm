@@ -93,10 +93,11 @@ class RBM(object):
                 prv_vb = cur_vb
                 prv_hb = cur_hb
 
-            etrain = np.mean(util.free_energy(train, cur_w, cur_vb, cur_hb))
-            self.energy_train.append(etrain)
-            evalid = np.mean(util.free_energy(valid, cur_w, cur_vb, cur_hb))
-            self.energy_valid.append(evalid)
+            if valid:
+                etrain = np.mean(util.free_energy(train, cur_w, cur_vb, cur_hb))
+                self.energy_train.append(etrain)
+                evalid = np.mean(util.free_energy(valid, cur_w, cur_vb, cur_hb))
+                self.energy_valid.append(evalid)
             self.errors.append(sess.run(err_sum, feed_dict={
                           v0: train, W: cur_w, vb: cur_vb, hb: cur_hb}))
             if verbose:
