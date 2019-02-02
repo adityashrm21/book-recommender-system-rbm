@@ -33,6 +33,7 @@ python3 main.py --data_dir='data' --num_hid=64 --epochs=30 --batch_size=128
 python3 main.py --data_dir='data' --num_hid=64 --epochs=30 --batch_size=128 --free_energy=True
 ```
 
+### Command help
 ```bash
 # to see all the arguments for training and getting recommendations
 python3 main.py --help
