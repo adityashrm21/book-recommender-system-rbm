@@ -1,11 +1,14 @@
 # Book-Recommender-System-RBM
-This is an implementation of a Book Recommender System created using Restricted Boltzmann Machines in TensorFlow based on the collaborative filtering paradigm. For a detailed tutorial on how to build this system, read my blog post on [Building a Recommender System using Restricted Boltzmann Machines](https://adityashrm21.github.io/Book-Recommender-System-RBM/). For information on RBMs, read [my blog post on Demystifying RBMs](https://adityashrm21.github.io/Restricted-Boltzmann-Machines/).
+This is an implementation of a Book Recommender System in TensorFlow using Restricted Boltzmann Machines based on the collaborative filtering paradigm.
+
+-----
 
 <img src = "https://img.shields.io/badge/requirements-compatible-blue.svg">
 
 - Python 3.6 and above
 - CUDA 8.0
-- Tensorflow-gpu 1.4.1 (you can check the version of TensorFlow compatible with the CUDA version installed on your machine [here](https://www.tensorflow.org/install/source#tested_source_configurations)
+- Tensorflow (if you don't have GPU access)
+- Tensorflow-gpu 1.4.1 (check compatible TensorFlow versions  with the CUDA versions [here](https://www.tensorflow.org/install/source#tested_source_configurations)
 - NumPy
 - Pandas
 - Matplotlib
@@ -94,7 +97,11 @@ The plot shows the average free energy for training and the validation dataset w
 
 If the model is not overfitting at all, the average free energy should be about the same on training and validation data. As the model starts to overfit the average free energy of the validation data will rise relative to the average free energy of the training data and this gap represents the amount of overfitting. So we can determine the number of epochs to run the training for using this approach. Looking at the plot, we can safely decide the number of epochs to be around **25**.
 
-**Feel free to add any ideas by opening issues or contributing in any way you like!**
+-----
+
+**Feel free to open issues or contribute in any way you like!**
+
+For a detailed tutorial on how to build this system, read my blog post on [Building a Recommender System using Restricted Boltzmann Machines](https://adityashrm21.github.io/Book-Recommender-System-RBM/). For information on RBMs, read [my blog post on Demystifying RBMs](https://adityashrm21.github.io/Restricted-Boltzmann-Machines/).
 
 #### Sources/References:
 * [Wikipedia - Restricted Boltzmann Machines](https://en.wikipedia.org/wiki/Restricted_Boltzmann_machine)
