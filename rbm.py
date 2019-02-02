@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 from utils import Util
+import matplotlib.pyplot as plt
 
 class RBM(object):
     '''
@@ -12,15 +13,18 @@ class RBM(object):
         self.alpha = alpha
         self.num_hid = H
         self.num_vis = num_vis # might face an error here, call preprocess if you do
+        self.errors = []
+        self.energy_train = []
+        self.energy_valid = []
 
-    def training(self, train, valid, user):
+    def training(self, train, valid, user, epochs, batchsize, free_energy, verbose):
         '''
         Function where RBM training takes place
         '''
         vb = tf.placeholder(tf.float32, [self.num_vis]) # Number of unique books
         hb = tf.placeholder(tf.float32, [self.num_hid]) # Number of features were going to learn
         W = tf.placeholder(tf.float32, [self.num_vis, self.num_hid])  # Weight Matrix
-        v0 = tf.placeholder(tf.float32, [None, self.num_vis]) # could be an error (change back to "float")
+        v0 = tf.placeholder(tf.float32, [None, self.num_vis])
 
         print("Phase 1: Input Processing")
         _h0 = tf.nn.sigmoid(tf.matmul(v0, W) + hb)  # Visible layer activation
@@ -49,7 +53,6 @@ class RBM(object):
 
         # Initialize our Variables with Zeroes using Numpy Library
         # Current weight
-        #cur_w = np.random.normal(loc=0, scale=0.01, size=[self.num_vis, self.num_hid])
         cur_w = np.zeros([self.num_vis, self.num_hid], np.float32)
         # Current visible unit biases
         cur_vb = np.zeros([self.num_vis], np.float32)
@@ -58,8 +61,8 @@ class RBM(object):
         cur_hb = np.zeros([self.num_hid], np.float32)
 
         # Previous weight
-        #prv_w = np.zeros([self.num_vis, self.num_hid], np.float32)
-        prv_w = np.random.normal(loc=0, scale=0.01, size=[self.num_vis, self.num_hid])
+        prv_w = np.random.normal(loc=0, scale=0.01,
+                                size=[self.num_vis, self.num_hid])
         # Previous visible unit biases
         prv_vb = np.zeros([self.num_vis], np.float32)
 
@@ -72,17 +75,11 @@ class RBM(object):
         sess = tf.Session(config=config)
         sess.run(tf.global_variables_initializer())
 
-        # Training RBM with 60 Epochs, with Each Epoch using batch size of 100.
-        # After training print out the error with epoch number.
+        print("Training RBM with {0} epochs and batch size: {1}".format(epochs, batchsize))
         print("Starting the training process")
-        epochs = 60
-        batchsize = 64
-        errors = []
-        #energy_train = []
-        #energy_valid = []
+        util = Util()
         for i in range(epochs):
-            for start, end in zip(range(0, len(train), batchsize), \
-            range(batchsize, len(train), batchsize)):
+            for start, end in zip(range(0, len(train), batchsize), range(batchsize, len(train), batchsize)):
                 batch = train[start:end]
                 cur_w = sess.run(update_w, feed_dict={
                                  v0: batch, W: prv_w, vb: prv_vb, hb: prv_hb})
@@ -94,15 +91,26 @@ class RBM(object):
                 prv_vb = cur_vb
                 prv_hb = cur_hb
 
-            #energy_train.append(np.mean(util.free_energy(train, cur_w, cur_vb, cur_hb)))
-            #print("Epoch: {0}, free energy: {1}".format(i, energy_train[i]))
-            #energy_valid.append(np.mean(free_energy(valid, cur_w, cur_vb, cur_hb)))
+            etrain = np.mean(util.free_energy(train, cur_w, cur_vb, cur_hb))
+            self.energy_train.append(etrain)
+            evalid = np.mean(util.free_energy(valid, cur_w, cur_vb, cur_hb))
+            self.energy_valid.append(evalid)
 
-            errors.append(sess.run(err_sum, feed_dict={
+
+
+
+            self.errors.append(sess.run(err_sum, feed_dict={
                           v0: train, W: cur_w, vb: cur_vb, hb: cur_hb}))
-            if i % 10 == 0:
-                print("Error in epoch {0} is: {1}".format(i, errors[i]))
+            if verbose:
+                print("Error in epoch {0} is: {1}".format(i, self.errors[i]))
+            elif i % 10 == 0:
+                print("Error in epoch {0} is: {1}".format(i, self.errors[i]))
 
+        if free_energy:
+            print("Exporting free energy plot")
+            self.export_free_energy_plot()
+        print("Exporting errors vs epochs plot")
+        self.export_errors_plot()
         inputUser = [train[user]]
         # Feeding in the User and Reconstructing the input
         hh0 = tf.nn.sigmoid(tf.matmul(v0, W) + hb)
@@ -193,35 +201,17 @@ class RBM(object):
         print('The books recommended to the user are:')
         print(sorted_result)
 
-        # # Saving the plots
-        # plt.plot(errors)
-        # plt.xlabel("Epoch")
-        # plt.ylabel("Error")
-        # plt.savefig("error.png")
-        #
-        # fig, ax = plt.subplots()
-        # ax.plot(energy_train, label='train')
-        # ax.plot(energy_valid, label='valid')
-        # leg = ax.legend()
-        # plt.xlabel("Epoch")
-        # plt.ylabel("Free Energy")
-        # plt.savefig("free_energy.png")
+    def export_errors_plot(self):
+        plt.plot(self.errors)
+        plt.xlabel("Epoch")
+        plt.ylabel("Error")
+        plt.savefig("plots/error.png")
 
-def main():
-    util = Util()
-    dir = "data"
-    rows = 20000
-    util.read_data(dir)
-    util.clean_subset(rows)
-    num_vis = len(util.ratings)
-    train, valid = util.split_data()
-    H = 64
-    user = 22
-    w = np.random.normal(loc=0, scale=0.01, size=[num_vis, H])
-    rbm = RBM(alpha = 0.1, H = H, num_vis = num_vis)
-    reco, prv_w, prv_vb, prv_hb = rbm.training(train, valid, user)
-    unread, read = rbm.calculate_scores(util.ratings, util.books, util.to_read, reco, user)
-    rbm.export(unread, read)
-
-if __name__ == "__main__":
-    main()
+    def export_free_energy_plot(self):
+        fig, ax = plt.subplots()
+        ax.plot(self.energy_train, label='train')
+        ax.plot(self.energy_valid, label='valid')
+        leg = ax.legend()
+        plt.xlabel("Epoch")
+        plt.ylabel("Free Energy")
+        plt.savefig("plots/free_energy.png")
