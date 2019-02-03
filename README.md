@@ -32,8 +32,9 @@ wget https://github.com/zygmuntz/goodbooks-10k/blob/master/to_read.csv
 ```bash
 python3 main.py --data_dir='data' --num_hid=64 --epochs=30 --batch_size=128
 
-# if you want the free energy plot as well
-python3 main.py --data_dir='data' --num_hid=64 --epochs=30 --batch_size=128 --free_energy=True
+# if you want the free energy plot as well to decide a good number of epochs
+# use free_energy=True with a higher number of epochs
+python3 main.py --data_dir='data' --num_hid=64 --epochs=80 --batch_size=128 --free_energy=True
 ```
 **Note**: Training will be very fast with a GPU but you can still run it without a GPU. Make sure to not select a large number of rows (default = 200000) as you may get Out of Memory error for a large tensor allocation.
 
